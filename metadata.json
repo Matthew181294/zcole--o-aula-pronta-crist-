@@ -1,0 +1,8 @@
+{
+  "name": "Remix: Coleção Aula Pronta Cristã",
+  "description": "Página de vendas de alta conversão para a Coleção Aula Pronta Cristã — contendo mais de 1000 atividades bíblicas sem preparo para professoras, líderes de ministério infantil e mães.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
