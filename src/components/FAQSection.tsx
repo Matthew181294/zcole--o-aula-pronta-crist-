@@ -35,6 +35,10 @@ const FAQS: FAQItem[] = [
   {
     question: "Tenho alguma garantia se o material não for o que eu esperava?",
     answer: "Sim! Nós oferecemos uma garantia incondicional de 7 dias, conforme determina a legislação nacional de defesa do consumidor. Se por qualquer motivo você abrir os arquivos e achar que as atividades não servem para a sua turma ou família, mande uma mensagem e devolvemos 100% do seu dinheiro, sem perguntas ou burocracia."
+  },
+  {
+    question: "Qual o horário de atendimento do Suporte?",
+    answer: "Nosso suporte funciona de Segunda a Sexta-feira das 9h às 19h, e aos Sábados das 10h às 17h. Se você tiver qualquer dúvida ou precisar de qualquer assistência com o download, envio ou impressão das atividades, nossa equipe está sempre de prontidão nesses horários para lhe atender rapidamente!"
   }
 ];
 

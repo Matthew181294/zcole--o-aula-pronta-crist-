@@ -38,6 +38,7 @@ import {
 
 import InteractiveTestimonials from "./components/InteractiveTestimonials";
 import FAQSection from "./components/FAQSection";
+import Quiz from "./components/Quiz";
 import { PurchaseNotification } from "./types";
 
 // Dynamic 3D Book Mockup Component built with pure Tailwind/CSS
@@ -80,6 +81,7 @@ const BookMockup = ({ title, bgClass, icon, badgeText }: { title: string, bgClas
 
 
 export default function App() {
+  const [isQuizCompleted, setIsQuizCompleted] = useState<boolean>(false);
   // States for the interactive VSL Video Player
   const [isVideoPlaying, setIsVideoPlaying] = useState<boolean>(false);
   const [videoSlideIndex, setVideoSlideIndex] = useState<number>(0);
@@ -143,8 +145,15 @@ export default function App() {
   // Configurable rates and pricing
   const [selectedPlan, setSelectedPlan] = useState<"basic" | "premium">("premium");
   const [addOrderBump, setAddOrderBump] = useState<boolean>(false);
-  const anchoredPrice = 258;
-  const actualPrice = 19.90;
+  const anchoredPriceBasic = "47,90";
+  const anchoredPricePremium = "149,90";
+  const priceBasic = 8.90;
+  const pricePremium = 16.90;
+  const actualPrice = selectedPlan === "premium" ? pricePremium : priceBasic;
+
+  // Checkout Links
+  const checkoutLinkBasic = "https://pay.wiapy.com/RIbApF6KN5d"; // Customize this link for R$ 8,90
+  const checkoutLinkPremium = "https://pay.wiapy.com/Jnl8nhlyiHU"; // Customize this link for R$ 16,90
   const [authorName, setAuthorName] = useState<string>("Tia Sarah Brandão");
   const [authorBio, setAuthorBio] = useState<string>(
     "Pedagoga cristã com mais de 12 anos de experiência na liderança de Escola Dominical e formação de professores para o ministério infantil. Abandonou os sábados de cansaço para desenhar um sistema estruturado e feliz, que já ajudou mais de 2.400 tias e mães a ensinarem o Evangelho puro com alegria."
@@ -278,6 +287,7 @@ export default function App() {
 
   // Checkout Modal State Management
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  const [showDiscountModal, setShowDiscountModal] = useState(false);
   const [checkoutStep, setCheckoutStep] = useState<"form" | "pix" | "success">("form");
   const [fullname, setFullname] = useState("");
   const [emailAddress, setEmailAddress] = useState("");
@@ -314,6 +324,10 @@ export default function App() {
 
 
 
+  if (!isQuizCompleted) {
+    return <Quiz onComplete={() => setIsQuizCompleted(true)} />;
+  }
+
   return (
     <div className="min-h-screen bg-[#FCFBF7] text-[#2B2B2B] font-sans antialiased selection:bg-[#E6C75A]/40 selection:text-[#0B2A4A] overflow-x-hidden">
       
@@ -344,7 +358,7 @@ export default function App() {
       <div id="promobar" className="bg-[#EE7E60] text-white py-2.5 px-4 text-center font-bold text-xs sm:text-sm tracking-wide shadow-md sticky top-0 z-30 flex flex-col sm:flex-row items-center justify-center gap-x-6 gap-y-1.5 border-b border-white/10">
         <div className="flex items-center gap-1.5 justify-center">
           <Sparkles className="w-4 h-4 animate-pulse text-[#E6C75A]" />
-          <span>Promoção hoje do nosso Produto Premium no valor de: <strong className="text-[#E6C75A] font-extrabold text-sm sm:text-base underline decoration-dashed decoration-[#E6C75A]/60">R$ 19,90</strong></span>
+          <span>Promoção hoje do nosso Produto Premium no valor de: <strong className="text-[#E6C75A] font-extrabold text-sm sm:text-base underline decoration-dashed decoration-[#E6C75A]/60">R$ 16,90</strong></span>
         </div>
         <div className="flex items-center gap-2 bg-black/20 px-3.5 py-1 rounded-full border border-white/15 text-[11px] sm:text-xs">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse inline-block" />
@@ -367,25 +381,101 @@ export default function App() {
           </span>
 
           {/* Headline Display Text */}
-          <h1 className="text-3xl sm:text-5xl md:text-6xl font-serif font-bold text-white tracking-tight leading-[1.2] max-w-4xl mx-auto">
-            Você também passa o <span className="text-[#EE7E60]">sábado à noite</span> caçando atividade na internet pra <span className="text-[#E6C75A]">Escola Dominical</span>?
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-serif font-black text-white tracking-tight leading-[1.2] max-w-4xl mx-auto">
+            Você <span className="text-[#EE7E60]">não precisa ser professora</span> para ensinar a Bíblia ao seu filho.
           </h1>
 
           {/* Support paragraph text */}
-          <p className="text-sm sm:text-lg text-gray-200 max-w-2xl mx-auto leading-relaxed">
-            O maior acervo de coloração, caça-palavras, labirintos e dinâmicas do Brasil. Economize tempo e receba o material completo diretamente no seu <strong>WhatsApp</strong> para usar no domingo sem improvisos.
+          <p className="text-xl sm:text-3xl md:text-4xl text-gray-100 max-w-4xl mx-auto leading-relaxed font-serif font-light">
+            Você só precisa das <span className="text-[#E6C75A] font-black">atividades certas</span> — e a <span className="underline decoration-[#EE7E60] decoration-2 underline-offset-4 font-medium text-white">Coleção Aula Pronta Cristã</span> já tem todas elas.
           </p>
 
-          {/* Centered Hero Product Collage Image */}
-          <div className="pt-6 pb-2 max-w-lg sm:max-w-xl md:max-w-2xl mx-auto relative group">
-            <div className="absolute inset-0 bg-[#EE7E60]/10 rounded-3xl blur-3xl pointer-events-none" />
-            <img
-              src="https://i.postimg.cc/kgmM9Fbf/Chat-GPT-Image-18-de-jun-de-2026-17-45-41.png"
-              alt="Coleção Aula Pronta Cristã"
-              className="w-full relative z-10 rounded-3xl drop-shadow-[0_20px_40px_rgba(0,0,0,0.6)] border border-white/10 hover:scale-[1.01] transition-all duration-300"
-              referrerPolicy="no-referrer"
-            />
+          {/* 4 Added Images per user request */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 md:gap-5 pt-8 pb-4">
+            <div className="relative group overflow-hidden rounded-2xl border-2 border-[#E6C75A]/20 hover:border-[#EE7E60]/80 transition-all duration-300 shadow-lg hover:shadow-2xl hover:shadow-[#EE7E60]/10 bg-[#0B2A4A]/45">
+              <img
+                src="https://i.postimg.cc/g0gFHqFH/image.jpg"
+                alt="Atividade Bíblica 1"
+                className="w-full h-auto object-cover rounded-xl transform group-hover:scale-[1.03] transition-transform duration-300"
+                referrerPolicy="no-referrer"
+              />
+            </div>
+            <div className="relative group overflow-hidden rounded-2xl border-2 border-[#E6C75A]/20 hover:border-[#EE7E60]/80 transition-all duration-300 shadow-lg hover:shadow-2xl hover:shadow-[#EE7E60]/10 bg-[#0B2A4A]/45">
+              <img
+                src="https://i.postimg.cc/HL6D94D2/image-(1).jpg"
+                alt="Atividade Bíblica 2"
+                className="w-full h-auto object-cover rounded-xl transform group-hover:scale-[1.03] transition-transform duration-300"
+                referrerPolicy="no-referrer"
+              />
+            </div>
+            <div className="relative group overflow-hidden rounded-2xl border-2 border-[#E6C75A]/20 hover:border-[#EE7E60]/80 transition-all duration-300 shadow-lg hover:shadow-2xl hover:shadow-[#EE7E60]/10 bg-[#0B2A4A]/45">
+              <img
+                src="https://i.postimg.cc/mrmfyNfp/image-(2).png"
+                alt="Atividade Bíblica 3"
+                className="w-full h-auto object-cover rounded-xl transform group-hover:scale-[1.03] transition-transform duration-300"
+                referrerPolicy="no-referrer"
+              />
+            </div>
+            <div className="relative group overflow-hidden rounded-2xl border-2 border-[#E6C75A]/20 hover:border-[#EE7E60]/80 transition-all duration-300 shadow-lg hover:shadow-2xl hover:shadow-[#EE7E60]/10 bg-[#0B2A4A]/45">
+              <img
+                src="https://i.postimg.cc/d05PjmPW/image-(3).jpg"
+                alt="Atividade Bíblica 4"
+                className="w-full h-auto object-cover rounded-xl transform group-hover:scale-[1.03] transition-transform duration-300"
+                referrerPolicy="no-referrer"
+              />
+            </div>
           </div>
+
+          {/* 2 More Added Images below the 4 first ones */}
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-5 max-w-2xl mx-auto pb-6">
+            <div className="relative group overflow-hidden rounded-2xl border-2 border-[#E6C75A]/20 hover:border-[#EE7E60]/80 transition-all duration-300 shadow-lg hover:shadow-2xl hover:shadow-[#EE7E60]/10 bg-[#0B2A4A]/45">
+              <img
+                src="https://i.postimg.cc/ZRmHnXM4/3333.jpg"
+                alt="Atividade Bíblica 5"
+                className="w-full h-auto object-cover rounded-xl transform group-hover:scale-[1.03] transition-transform duration-300"
+                referrerPolicy="no-referrer"
+              />
+            </div>
+            <div className="relative group overflow-hidden rounded-2xl border-2 border-[#E6C75A]/20 hover:border-[#EE7E60]/80 transition-all duration-300 shadow-lg hover:shadow-2xl hover:shadow-[#EE7E60]/10 bg-[#0B2A4A]/45">
+              <img
+                src="https://i.postimg.cc/9M2b0sn2/44444.jpg"
+                alt="Atividade Bíblica 6"
+                className="w-full h-auto object-cover rounded-xl transform group-hover:scale-[1.03] transition-transform duration-300"
+                referrerPolicy="no-referrer"
+              />
+            </div>
+          </div>
+
+          {/* Screenshot badges: ACESSO IMEDIATO / VITALÍCIO / ATUALIZAÇÕES */}
+          <div className="flex flex-wrap justify-center items-center gap-x-6 gap-y-2 text-xs font-bold text-[#E6C75A] pt-2">
+            <span className="flex items-center gap-1.5">
+              <Check className="w-4 h-4 bg-emerald-500 text-white rounded-full p-0.5" /> ENVIO PARA O SEU WHATSAPP
+            </span>
+            <span className="flex items-center gap-1.5">
+              <Check className="w-4 h-4 bg-emerald-500 text-white rounded-full p-0.5" /> CONTEÚDO VITALÍCIO
+            </span>
+            <span className="flex items-center gap-1.5">
+              <Check className="w-4 h-4 bg-emerald-500 text-white rounded-full p-0.5" /> CONECTOU E BAIXOU NA HORA
+            </span>
+          </div>
+
+          {/* Hero Action CTA Button */}
+          <div className="pt-4">
+            <a
+              href="#comprar"
+              className="inline-flex items-center gap-3 bg-[#EE7E60] hover:bg-[#D45E44] text-white py-5 px-10 rounded-2xl font-black text-lg md:text-xl transition-all duration-200 transform hover:scale-[1.03] shadow-2xl shadow-orange-500/25 uppercase tracking-wide cursor-pointer animate-pulse-slow"
+            >
+              <span>QUERO ENSINAR A BÍBLIA COM PROPÓSITO!</span>
+              <ArrowRight className="w-6 h-6 stroke-[3]" />
+            </a>
+          </div>
+
+          {/* Support text below button */}
+          <p className="text-xs text-gray-300 pb-4">
+            👉 Envio 100% digital e envio instantâneo no seu celular cadastrado após a liberação simulada de teste.
+          </p>
+
+
 
             {/* A small indicator to let people know about material delivery in WhatsApp */}
             <div className="bg-[#E6C75A]/10 border border-[#E6C75A]/25 p-4 rounded-xl text-center flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#E6C75A]">
@@ -424,34 +514,7 @@ export default function App() {
               </div>
             </div>
 
-          {/* Screenshot badges: ACESSO IMEDIATO / VITALÍCIO / ATUALIZAÇÕES */}
-          <div className="flex flex-wrap justify-center items-center gap-x-6 gap-y-2 text-xs font-bold text-[#E6C75A] pt-4">
-            <span className="flex items-center gap-1.5">
-              <Check className="w-4 h-4 bg-emerald-500 text-white rounded-full p-0.5" /> ENVIO PARA O SEU WHATSAPP
-            </span>
-            <span className="flex items-center gap-1.5">
-              <Check className="w-4 h-4 bg-emerald-500 text-white rounded-full p-0.5" /> CONTEÚDO VITALÍCIO
-            </span>
-            <span className="flex items-center gap-1.5">
-              <Check className="w-4 h-4 bg-emerald-500 text-white rounded-full p-0.5" /> CONECTOU E BAIXOU NA HORA
-            </span>
-          </div>
 
-          {/* Hero Action CTA Button */}
-          <div className="pt-2">
-            <a
-              href="#comprar"
-              className="inline-flex items-center gap-2.5 bg-[#C9A227] hover:bg-[#E6C75A] text-[#0B2A4A] py-4.5 px-10 rounded-xl font-extrabold text-base md:text-lg transition-transform duration-200 transform hover:scale-[1.02] shadow-xl glow-btn"
-            >
-              <span>QUERO RECEBER NO MEU WHATSAPP</span>
-              <ArrowRight className="w-5 h-5 font-bold" />
-            </a>
-          </div>
-
-          {/* Support text below button */}
-          <p className="text-xs text-gray-300">
-            👉 Envio 100% digital e envio instantâneo no seu celular cadastrado após a liberação simulada de teste.
-          </p>
 
         </div>
       </header>
@@ -1093,31 +1156,31 @@ export default function App() {
             </span>
           </div>
 
-          {/* Pricing Outline centered single card to fit the updated product option */}
-          <div className="max-w-md mx-auto pt-4 text-left">
+          {/* Pricing Outline side-by-side cards with two competitive choices */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto pt-6 text-left">
 
-            {/* COLEÇÃO AULA PRONTA CRISTÃ CARD (Highlighted Coral Style) */}
-            <div className="bg-white text-[#2B2B2B] rounded-3xl p-6 sm:p-8 border-4 border-[#EE7E60] shadow-2xl flex flex-col justify-between relative transform hover:scale-[1.01] transition duration-200">
+            {/* CARD 1: VERSÃO COMPLETA + BÔNUS (R$ 16,90) */}
+            <div className={`bg-white text-[#2B2B2B] rounded-3xl p-6 sm:p-8 border-4 ${selectedPlan === "premium" ? "border-[#EE7E60] shadow-2xl scale-[1.02]" : "border-gray-200/80 shadow-md"} flex flex-col justify-between relative transform hover:scale-[1.01] transition duration-200`}>
               
               {/* Highlight badge overlay */}
               <div className="absolute -top-4.5 left-1/2 transform -translate-x-1/2 bg-[#EE7E60] text-white text-[9px] font-black uppercase tracking-wider px-4 py-1.5 rounded-full shadow-md flex items-center gap-1 shrink-0 whitespace-nowrap z-20">
-                <span>★ RECOMENDADO — MAIS COMPLETO ★</span>
+                <span>★ RECOMENDADO — PLANO COMPLETO ★</span>
               </div>
 
               <div className="space-y-6">
                 
                 {/* Title & Sub */}
                 <div className="text-center pb-4 border-b border-gray-100 space-y-1 pt-2">
-                  <h3 className="text-2xl font-black font-sans text-[#EE7E60] uppercase tracking-wide">COLEÇÃO AULA PRONTA CRISTÃ</h3>
-                  <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block font-mono">ENVIO PARA O SEU WHATSAPP</span>
+                  <h3 className="text-xl font-black font-sans text-[#EE7E60] uppercase tracking-wide">Coleção + 5 Bônus</h3>
+                  <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block font-mono">ENVIO COMPLETO PARA WHATSAPP</span>
                 </div>
 
                 {/* Pricing inside card */}
                 <div className="text-center py-2 space-y-1 select-none">
-                  <span className="text-xs text-gray-400 line-through block">R$ 258</span>
+                  <span className="text-xl sm:text-2xl font-bold text-gray-400 line-through block">R$ {anchoredPricePremium}</span>
                   <div className="flex items-baseline justify-center gap-0.5">
                     <span className="text-lg font-bold text-gray-400">R$</span>
-                    <span className="text-5xl font-black font-serif text-[#EE7E60] tracking-tight">19</span>
+                    <span className="text-5xl font-black font-serif text-[#EE7E60] tracking-tight">16</span>
                     <span className="text-xl font-bold text-[#EE7E60]">,90</span>
                   </div>
                   <span className="text-[10px] font-extrabold text-[#EE7E60] uppercase tracking-wider block">PAGAMENTO ÚNICO</span>
@@ -1165,7 +1228,7 @@ export default function App() {
                   </div>
                   <div className="flex items-start gap-2.5 text-left">
                     <Check className="w-4 h-4 text-purple-600 shrink-0 mt-0.5" />
-                    <span className="text-purple-950 font-medium">BÔNUS 4 — Mural da Memória: 20 Versículos Ilustrados</span>
+                    <span className="text-purple-950 font-medium font-semibold">BÔNUS 4 — Mural da Memória: 20 Versículos Ilustrados</span>
                   </div>
                   <div className="flex items-start gap-2.5 text-left">
                     <Check className="w-4 h-4 text-purple-600 shrink-0 mt-0.5" />
@@ -1181,21 +1244,125 @@ export default function App() {
                   role="button"
                   tabIndex={0}
                   onClick={() => {
-                    window.open("https://pay.wiapy.com/Jnl8nhlyiHU", "_blank");
+                    setSelectedPlan("premium");
+                    window.open(checkoutLinkPremium, "_blank");
                   }}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
-                      window.open("https://pay.wiapy.com/Jnl8nhlyiHU", "_blank");
+                      setSelectedPlan("premium");
+                      window.open(checkoutLinkPremium, "_blank");
                     }
                   }}
-                  className="w-full bg-[#EE7E60] hover:bg-[#D45E44] text-white py-4 rounded-2xl font-black text-xs sm:text-sm uppercase tracking-wider transition-all duration-200 cursor-pointer text-center flex items-center justify-center gap-1.5 shadow-md hover:shadow-lg glow-btn animate-pulse-slow select-none"
+                  className="bg-[#EE7E60] hover:bg-[#D45E44] text-white py-4 rounded-2xl font-black text-xs sm:text-sm uppercase tracking-wider transition-all duration-200 cursor-pointer text-center flex items-center justify-center gap-1.5 shadow-md hover:shadow-lg glow-btn animate-pulse-slow select-none"
                 >
-                  <span>Quero Comprar Agora</span>
+                  <span>Garantir Tudo por R$ 16,90</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </div>
                 
                 <div className="text-center pt-1 flex items-center justify-center gap-1 text-[10px] text-gray-500 font-medium">
                   <span>👥 +1.253 pessoas escolheram e receberam no WhatsApp</span>
+                </div>
+              </div>
+
+            </div>
+
+            {/* CARD 2: VERSÃO BÁSICA (R$ 8,90) */}
+            <div className={`bg-white text-[#2B2B2B] rounded-3xl p-6 sm:p-8 border-4 ${selectedPlan === "basic" ? "border-[#0B2A4A] shadow-2xl scale-[1.02]" : "border-gray-200/80 shadow-md"} flex flex-col justify-between relative transform hover:scale-[1.01] transition duration-200`}>
+              
+              <div className="space-y-6">
+                
+                {/* Title & Sub */}
+                <div className="text-center pb-4 border-b border-gray-100 space-y-1">
+                  <h3 className="text-xl font-black font-sans text-[#0B2A4A] uppercase tracking-wide">Coleção Básica</h3>
+                  <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block font-mono">SEM OS BÔNUS EXCLUSIVOS</span>
+                </div>
+
+                {/* Pricing inside card */}
+                <div className="text-center py-2 space-y-1 select-none">
+                  <span className="text-xl sm:text-2xl font-bold text-gray-400 line-through block">R$ {anchoredPriceBasic}</span>
+                  <div className="flex items-baseline justify-center gap-0.5">
+                    <span className="text-lg font-bold text-gray-400">R$</span>
+                    <span className="text-5xl font-black font-serif text-[#0B2A4A] tracking-tight">8</span>
+                    <span className="text-xl font-bold text-[#0B2A4A]">,90</span>
+                  </div>
+                  <span className="text-[10px] font-extrabold text-[#0B2A4A] uppercase tracking-wider block">PAGAMENTO ÚNICO</span>
+                </div>
+
+                {/* Features list */}
+                <div className="space-y-3.5 text-xs text-gray-600 font-sans">
+                  <div className="flex items-start gap-2.5">
+                    <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                    <span className="font-semibold text-gray-700">+1000 Atividades completas para imprimir</span>
+                  </div>
+                  <div className="flex items-start gap-2.5">
+                    <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                    <span>Histórias do Antigo e Novo Testamento</span>
+                  </div>
+                  <div className="flex items-start gap-2.5">
+                    <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                    <span className="font-semibold text-emerald-600">Envio para o seu WhatsApp e E-mail</span>
+                  </div>
+                  <div className="flex items-start gap-2.5">
+                    <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                    <span>Guia de Brincadeiras Criativas</span>
+                  </div>
+                  <div className="flex items-start gap-2.5">
+                    <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                    <span>Garantia irrestrita de 7 dias</span>
+                  </div>
+                  
+                  {/* Divider for bonuses - NOT INCLUDED */}
+                  <div className="border-t border-dashed border-gray-200 my-2 pt-2 text-[10px] uppercase font-bold text-gray-400 tracking-wider">
+                    BÔNUS NÃO INCLUSOS NESTA VERSÃO:
+                  </div>
+
+                  <div className="flex items-start gap-2.5 text-left opacity-45">
+                    <X className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
+                    <span className="text-gray-500 line-through">BÔNUS 1 — 15 Quebra-Gelos Rápidos de WhatsApp</span>
+                  </div>
+                  <div className="flex items-start gap-2.5 text-left opacity-45">
+                    <X className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
+                    <span className="text-gray-500 line-through">BÔNUS 2 — Calendário Cristão de Aulas: 52 Temas</span>
+                  </div>
+                  <div className="flex items-start gap-2.5 text-left opacity-45">
+                    <X className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
+                    <span className="text-gray-500 line-through">BÔNUS 3 — Bíblia para os Pequenos: 30 Atividades</span>
+                  </div>
+                  <div className="flex items-start gap-2.5 text-left opacity-45">
+                    <X className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
+                    <span className="text-gray-500 line-through">BÔNUS 4 — Mural da Memória: 20 Versículos Ilustrados</span>
+                  </div>
+                  <div className="flex items-start gap-2.5 text-left opacity-45">
+                    <X className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
+                    <span className="text-gray-500 line-through">BÔNUS 5 — 10 Roteiros de Emergência Rápidos</span>
+                  </div>
+                </div>
+
+              </div>
+
+              {/* Button action */}
+              <div className="pt-8 space-y-2">
+                <div
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => {
+                    setSelectedPlan("basic");
+                    setShowDiscountModal(true);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      setSelectedPlan("basic");
+                      setShowDiscountModal(true);
+                    }
+                  }}
+                  className="w-full bg-[#0B2A4A] hover:bg-[#14416E] text-white py-4 rounded-2xl font-black text-xs sm:text-sm uppercase tracking-wider transition-all duration-200 cursor-pointer text-center flex items-center justify-center gap-1.5 shadow-md hover:shadow-lg select-none"
+                >
+                  <span>Comprar Versão Básica (R$ 8,90)</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </div>
+                
+                <div className="text-center pt-1 flex items-center justify-center gap-1 text-[10px] text-gray-500 font-medium">
+                  <span>🔒 Pagamento avulso seguro e sem assinatura</span>
                 </div>
               </div>
 
@@ -1497,6 +1664,11 @@ export default function App() {
             <span className="font-serif font-bold text-base text-white tracking-wide">Coleção Aula Pronta Cristã</span>
             <p className="text-[11px] text-gray-400">© 2026 Coleção Aula Pronta Cristã. Todos os direitos reservados.</p>
             <p className="text-[10px] text-gray-500">Transformando o ensino bíblico infantil com leveza e a sã doutrina.</p>
+            <div className="pt-2 text-[10.5px] text-gray-400 space-y-0.5 border-t border-white/5 mt-2">
+              <p className="font-semibold text-white flex items-center gap-1"><span className="text-[#EE7E60]">🕒</span> Horário do Suporte:</p>
+              <p>• Segunda a Sexta: 9h às 19h</p>
+              <p>• Sábados: 10h às 17h</p>
+            </div>
           </div>
 
           <div className="flex gap-4 text-gray-400">
@@ -1504,12 +1676,12 @@ export default function App() {
             <span>•</span>
             <span className="cursor-pointer hover:text-white transition" onClick={() => setInfoModal({ title: "Política de Privacidade", text: "As políticas de privacidade fictícias seguem os Termos de Uso de materiais pedagógicos de formação cristã. Todos os PDFs baixados são destinados a uso individual na sua igreja local ou lar doméstico, sendo proibida a revenda comercial." })}>Política de Privacidade</span>
             <span>•</span>
-            <span className="cursor-pointer hover:text-white transition" onClick={() => setInfoModal({ title: "Contato de Suporte", text: "Precisa de ajuda ou tem alguma dúvida comercial sobre o material? Envie-nos um e-mail fictício para: contato@aulaprontacrista.com.br. Retornamos simulações em até 24 horas úteis." })}>Contato de Suporte</span>
+            <span className="cursor-pointer hover:text-white transition" onClick={() => setInfoModal({ title: "Contato de Suporte", text: "Precisa de ajuda ou tem alguma dúvida comercial sobre o material? Envie-nos um e-mail fictício para: contato@aulaprontacrista.com.br. Retornamos em até 24 horas úteis. Nosso horário de funcionamento é de Segunda a Sexta-feira das 9h às 19h, e aos Sábados das 10h às 17h." })}>Contato de Suporte</span>
           </div>
         </div>
 
         <div className="max-w-4xl mx-auto pt-6 border-t border-white/5 text-[10px] text-gray-500 leading-relaxed text-center">
-          Este site é de caráter demonstrativo. O preço exibido (R$ 19,90) e materiais descritos são simulações reais inspiradas no escopo do projeto da Coleção Aula Pronta. Certifique-se de preencher dados verídicos ao comercializar em plataformas oficiais.
+          Este site é de caráter demonstrativo. Os preços exibidos (R$ 8,90 e R$ 16,90) e materiais descritos são simulações reais inspiradas no escopo do projeto da Coleção Aula Pronta. Certifique-se de preencher dados verídicos ao comercializar em plataformas oficiais.
         </div>
       </footer>
 
@@ -1570,6 +1742,95 @@ export default function App() {
 
       {/* Shared Informative Popup Modal (Alternative to alert) */}
       <AnimatePresence>
+        {showDiscountModal && (
+          <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-[60] flex items-center justify-center p-4">
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              className="bg-white text-left rounded-3xl max-w-lg w-full shadow-2xl text-[#2B2B2B] border border-gray-150 overflow-hidden"
+            >
+              {/* Header Badge Accent */}
+              <div className="bg-[#0B2A4A] text-white px-6 py-4.5 text-center relative">
+                <span className="text-[10px] font-black tracking-widest uppercase text-[#E6C75A] bg-white/10 px-3 py-1 rounded-full border border-white/10">
+                  🎁 PRESENTE EXCLUSIVO LIBERADO!
+                </span>
+                <h4 className="font-serif font-black text-lg sm:text-xl mt-3 text-white">
+                  Oportunidade Especial para Mães e Tias
+                </h4>
+                <div
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => setShowDiscountModal(false)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      setShowDiscountModal(false);
+                    }
+                  }}
+                  className="absolute top-4 right-4 p-1 rounded-full bg-white/10 hover:bg-white/20 text-white transition cursor-pointer select-none"
+                  aria-label="close"
+                >
+                  <X className="w-5 h-5" />
+                </div>
+              </div>
+
+              {/* Modal Body */}
+              <div className="p-6 sm:p-8 space-y-6 text-center">
+                <div className="bg-orange-50/70 border border-orange-100 rounded-2xl p-5 sm:p-6 text-left space-y-3">
+                  <p className="text-[#0B2A4A] font-serif font-black text-base sm:text-lg leading-relaxed text-center">
+                    Você ganhou um cupom de desconto na oferta Coleção + 5 Bônus, ela está saindo pra você por apenas <span className="text-[#EE7E60] underline underline-offset-4 decoration-2">R$ 11,90</span>.
+                  </p>
+                  <div className="border-t border-orange-200/50 pt-3 text-[11px] text-gray-500 font-medium text-center">
+                    ✓ Garanta o acervo completo hoje de R$ 149,90 por R$ 11,90
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-3.5 pt-2">
+                  <div
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => {
+                      window.open("https://pay.wiapy.com/L5hCUtmpp-Q", "_blank");
+                      setShowDiscountModal(false);
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        window.open("https://pay.wiapy.com/L5hCUtmpp-Q", "_blank");
+                        setShowDiscountModal(false);
+                      }
+                    }}
+                    className="w-full bg-[#EE7E60] hover:bg-[#D45E44] text-white py-4.5 px-6 rounded-2xl font-black text-sm sm:text-base uppercase tracking-wider transition-all duration-200 cursor-pointer text-center flex items-center justify-center gap-2 shadow-lg shadow-orange-500/20 active:scale-98 glow-btn animate-pulse-slow select-none"
+                  >
+                    <span>QUERO APROVEITAR A PROMOÇÃO DE 11,90</span>
+                    <ArrowRight className="w-4.5 h-4.5 shrink-0 stroke-[3]" />
+                  </div>
+
+                  <div
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => {
+                      window.open(checkoutLinkBasic, "_blank");
+                      setShowDiscountModal(false);
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        window.open(checkoutLinkBasic, "_blank");
+                        setShowDiscountModal(false);
+                      }
+                    }}
+                    className="text-gray-500 hover:text-[#0B2A4A] transition text-center font-bold text-xs sm:text-sm underline cursor-pointer select-none py-1 block"
+                  >
+                    Quero ainda comprar a coleção básica por 8,90.
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* Shared Informative Popup Modal (Alternative to alert) */}
+      <AnimatePresence>
         {infoModal && (
           <div className="fixed inset-0 bg-black/60 backdrop-blur-xs z-[60] flex items-center justify-center p-4">
             <motion.div
@@ -1613,51 +1874,6 @@ export default function App() {
               </div>
             </motion.div>
           </div>
-        )}
-      </AnimatePresence>
-
-
-
-      {/* 18. PERSISTENT MOBILE FLOATING BUY BAR */}
-      <AnimatePresence>
-        {showFloatingBar && (
-          <motion.div
-            initial={{ y: 80, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 80, opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed bottom-0 left-0 right-0 z-40 bg-[#0B2A4A] border-t border-white/10 p-3 flex sm:hidden items-center justify-between shadow-2xl px-4 pb-4 sm:pb-3"
-          >
-            <div className="text-left flex flex-col justify-center">
-              <span className="text-[10px] text-gray-300 font-bold uppercase tracking-wider">
-                Coleção Aula Pronta
-              </span>
-              <div className="flex items-baseline gap-1">
-                <span className="text-[10px] text-[#E6C75A] font-semibold">Preço especial</span>
-                <span className="text-sm text-white font-serif font-black">
-                  R$ 19,90
-                </span>
-              </div>
-            </div>
-
-            <div
-              role="button"
-              tabIndex={0}
-              onClick={() => {
-                window.open("https://pay.wiapy.com/Jnl8nhlyiHU", "_blank");
-              }}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  window.open("https://pay.wiapy.com/Jnl8nhlyiHU", "_blank");
-                }
-              }}
-              className="bg-[#EE7E60] hover:bg-[#D45E44] text-white py-2.5 px-4 rounded-xl text-xs font-black uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-md active:scale-95 transition-all duration-150 cursor-pointer select-none glow-btn animate-pulse-slow"
-              style={{ minHeight: '44px' }}
-            >
-              <span>Garantir Vaga</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </div>
-          </motion.div>
         )}
       </AnimatePresence>
 
