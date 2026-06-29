@@ -148,12 +148,12 @@ export default function App() {
   const anchoredPriceBasic = "47,90";
   const anchoredPricePremium = "149,90";
   const priceBasic = 8.90;
-  const pricePremium = 16.90;
+  const pricePremium = 17.90;
   const actualPrice = selectedPlan === "premium" ? pricePremium : priceBasic;
 
   // Checkout Links
-  const checkoutLinkBasic = "https://pay.wiapy.com/RIbApF6KN5d"; // Customize this link for R$ 8,90
-  const checkoutLinkPremium = "https://pay.wiapy.com/Jnl8nhlyiHU"; // Customize this link for R$ 16,90
+  const checkoutLinkBasic = "https://pay.hotmart.com/Q106544708R"; // Customize this link for R$ 8,90
+  const checkoutLinkPremium = "https://pay.hotmart.com/T106422616N"; // Customize this link for R$ 17,90
   const [authorName, setAuthorName] = useState<string>("Tia Sarah Brandão");
   const [authorBio, setAuthorBio] = useState<string>(
     "Pedagoga cristã com mais de 12 anos de experiência na liderança de Escola Dominical e formação de professores para o ministério infantil. Abandonou os sábados de cansaço para desenhar um sistema estruturado e feliz, que já ajudou mais de 2.400 tias e mães a ensinarem o Evangelho puro com alegria."
@@ -358,7 +358,7 @@ export default function App() {
       <div id="promobar" className="bg-[#EE7E60] text-white py-2.5 px-4 text-center font-bold text-xs sm:text-sm tracking-wide shadow-md sticky top-0 z-30 flex flex-col sm:flex-row items-center justify-center gap-x-6 gap-y-1.5 border-b border-white/10">
         <div className="flex items-center gap-1.5 justify-center">
           <Sparkles className="w-4 h-4 animate-pulse text-[#E6C75A]" />
-          <span>Promoção hoje do nosso Produto Premium no valor de: <strong className="text-[#E6C75A] font-extrabold text-sm sm:text-base underline decoration-dashed decoration-[#E6C75A]/60">R$ 16,90</strong></span>
+          <span>Promoção hoje do nosso Produto Premium no valor de: <strong className="text-[#E6C75A] font-extrabold text-sm sm:text-base underline decoration-dashed decoration-[#E6C75A]/60">R$ 17,90</strong></span>
         </div>
         <div className="flex items-center gap-2 bg-black/20 px-3.5 py-1 rounded-full border border-white/15 text-[11px] sm:text-xs">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse inline-block" />
@@ -1159,7 +1159,7 @@ export default function App() {
           {/* Pricing Outline side-by-side cards with two competitive choices */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto pt-6 text-left">
 
-            {/* CARD 1: VERSÃO COMPLETA + BÔNUS (R$ 16,90) */}
+            {/* CARD 1: VERSÃO COMPLETA + BÔNUS (R$ 17,90) */}
             <div className={`bg-white text-[#2B2B2B] rounded-3xl p-6 sm:p-8 border-4 ${selectedPlan === "premium" ? "border-[#EE7E60] shadow-2xl scale-[1.02]" : "border-gray-200/80 shadow-md"} flex flex-col justify-between relative transform hover:scale-[1.01] transition duration-200`}>
               
               {/* Highlight badge overlay */}
@@ -1180,7 +1180,7 @@ export default function App() {
                   <span className="text-xl sm:text-2xl font-bold text-gray-400 line-through block">R$ {anchoredPricePremium}</span>
                   <div className="flex items-baseline justify-center gap-0.5">
                     <span className="text-lg font-bold text-gray-400">R$</span>
-                    <span className="text-5xl font-black font-serif text-[#EE7E60] tracking-tight">16</span>
+                    <span className="text-5xl font-black font-serif text-[#EE7E60] tracking-tight">17</span>
                     <span className="text-xl font-bold text-[#EE7E60]">,90</span>
                   </div>
                   <span className="text-[10px] font-extrabold text-[#EE7E60] uppercase tracking-wider block">PAGAMENTO ÚNICO</span>
@@ -1255,7 +1255,7 @@ export default function App() {
                   }}
                   className="bg-[#EE7E60] hover:bg-[#D45E44] text-white py-4 rounded-2xl font-black text-xs sm:text-sm uppercase tracking-wider transition-all duration-200 cursor-pointer text-center flex items-center justify-center gap-1.5 shadow-md hover:shadow-lg glow-btn animate-pulse-slow select-none"
                 >
-                  <span>Garantir Tudo por R$ 16,90</span>
+                  <span>Garantir Tudo por R$ 17,90</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </div>
                 
@@ -1681,7 +1681,7 @@ export default function App() {
         </div>
 
         <div className="max-w-4xl mx-auto pt-6 border-t border-white/5 text-[10px] text-gray-500 leading-relaxed text-center">
-          Este site é de caráter demonstrativo. Os preços exibidos (R$ 8,90 e R$ 16,90) e materiais descritos são simulações reais inspiradas no escopo do projeto da Coleção Aula Pronta. Certifique-se de preencher dados verídicos ao comercializar em plataformas oficiais.
+          Este site é de caráter demonstrativo. Os preços exibidos (R$ 8,90 e R$ 17,90) e materiais descritos são simulações reais inspiradas no escopo do projeto da Coleção Aula Pronta. Certifique-se de preencher dados verídicos ao comercializar em plataformas oficiais.
         </div>
       </footer>
 
@@ -1790,12 +1790,12 @@ export default function App() {
                     role="button"
                     tabIndex={0}
                     onClick={() => {
-                      window.open("https://pay.wiapy.com/L5hCUtmpp-Q", "_blank");
+                      window.open("https://pay.hotmart.com/P106544601D", "_blank");
                       setShowDiscountModal(false);
                     }}
                     onKeyDown={(e) => {
                       if (e.key === 'Enter' || e.key === ' ') {
-                        window.open("https://pay.wiapy.com/L5hCUtmpp-Q", "_blank");
+                        window.open("https://pay.hotmart.com/P106544601D", "_blank");
                         setShowDiscountModal(false);
                       }
                     }}
