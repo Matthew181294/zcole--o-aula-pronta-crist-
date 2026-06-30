@@ -152,8 +152,8 @@ export default function App() {
   const actualPrice = selectedPlan === "premium" ? pricePremium : priceBasic;
 
   // Checkout Links
-  const checkoutLinkBasic = "https://pay.hotmart.com/Q106544708R"; // Customize this link for R$ 8,90
-  const checkoutLinkPremium = "https://pay.hotmart.com/T106422616N"; // Customize this link for R$ 17,90
+  const checkoutLinkBasic = "https://pay.hotmart.com/Q106544708R?off=e6mduat9&checkoutMode=10"; // Customize this link for R$ 8,90
+  const checkoutLinkPremium = "https://pay.hotmart.com/T106422616N?checkoutMode=10"; // Customize this link for R$ 17,90
   const [authorName, setAuthorName] = useState<string>("Tia Sarah Brandão");
   const [authorBio, setAuthorBio] = useState<string>(
     "Pedagoga cristã com mais de 12 anos de experiência na liderança de Escola Dominical e formação de professores para o ministério infantil. Abandonou os sábados de cansaço para desenhar um sistema estruturado e feliz, que já ajudou mais de 2.400 tias e mães a ensinarem o Evangelho puro com alegria."
@@ -1790,12 +1790,12 @@ export default function App() {
                     role="button"
                     tabIndex={0}
                     onClick={() => {
-                      window.open("https://pay.hotmart.com/P106544601D", "_blank");
+                      window.open("https://pay.hotmart.com/P106544601D?off=evkh8rql&checkoutMode=10", "_blank");
                       setShowDiscountModal(false);
                     }}
                     onKeyDown={(e) => {
                       if (e.key === 'Enter' || e.key === ' ') {
-                        window.open("https://pay.hotmart.com/P106544601D", "_blank");
+                        window.open("https://pay.hotmart.com/P106544601D?off=evkh8rql&checkoutMode=10", "_blank");
                         setShowDiscountModal(false);
                       }
                     }}
